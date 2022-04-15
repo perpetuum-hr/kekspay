@@ -1,0 +1,44 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Store:etc/config.xsd">
+    <default>
+        <payment>
+            <kekspay>
+                <model>Perpetuum\KeksPay\Model\Payment\KeksPay</model>
+                <payment_action>authorize_capture</payment_action>
+                <title>KEKS Pay</title>
+                <active>0</active>
+                <order_status>pending</order_status>
+                <production_url><![CDATA[https://ewa.erstebank.hr/eretailer/]]></production_url>
+                <secret_key backend_model="Magento\Config\Model\Config\Backend\Encrypted"/>
+                <public_key backend_model="Magento\Config\Model\Config\Backend\Encrypted" />
+                <private_key backend_model="Magento\Config\Model\Config\Backend\Encrypted" />
+                <sandbox>1</sandbox>
+                <checkauthorizationtoken>1</checkauthorizationtoken>
+                <allowspecific>0</allowspecific>
+                <!-- begin variables -->
+                <can_refund_partial_per_invoice>1</can_refund_partial_per_invoice>
+                <can_order>0</can_order>
+                <can_authorize>0</can_authorize>
+                <can_capture>1</can_capture>
+                <can_fetch_transaction_information>1</can_fetch_transaction_information>
+                <can_refund>1</can_refund>
+                <can_void>1</can_void>
+                <can_cancel>1</can_cancel>
+                <can_use_internal>0</can_use_internal>
+                <can_use_checkout>1</can_use_checkout>
+                <can_edit>0</can_edit>
+                <is_gateway>0</is_gateway>
+                <is_offline>0</is_offline>
+                <can_initialize>0</can_initialize>
+                <can_review_payment>0</can_review_payment>
+                <can_use_for_multishipping>0</can_use_for_multishipping>
+                <include_line_items>0</include_line_items>
+                <checkout_mode>auth</checkout_mode>
+                <!-- end variables -->
+                <store_description>Store</store_description>
+                <appstore_app_link><![CDATA[https://itunes.apple.com/hr/app/keks-pay/id1434843784?l=hr&mt=8]]></appstore_app_link>
+                <playstore_app_link><![CDATA[https://play.google.com/store/apps/details?id=agency.sevenofnine.erstewallet.production]]></playstore_app_link>
+            </kekspay>
+        </payment>
+    </default>
+</config>

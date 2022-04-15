@@ -1,0 +1,8 @@
+<?php declare(strict_types=1);
+/** @var $block \Magento\Framework\View\Element\Template */
+/** @var $view \Perpetuum\KeksPay\ViewModel\OrderDetails */
+$view = $block->getData('details');
+?>
+<?php if ($view->getCurrentOrderKeksId()): ?>
+    <h2>KEKS ID: <strong><?= $block->escapeHtml($view->getCurrentOrderKeksId()) ?></strong></h2>
+<?php endif; ?>

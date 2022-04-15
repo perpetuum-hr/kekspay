@@ -1,0 +1,94 @@
+<div class="payment-method" data-bind="css: {'_active': (getCode() == isChecked())}">
+    <div class="payment-method-title field choice">
+        <input type="radio"
+               name="payment[method]"
+               class="radio"
+               data-bind="attr: {'id': getCode()}, value: getCode(), checked: isChecked, click: selectPaymentMethod, visible: isRadioButtonVisible()"/>
+        <label data-bind="attr: {'for': getCode()}" class="label">
+            <span>
+                <div style="float:right"><img width="55" data-bind="attr: {'src': getLogoUrl()}"></div><span
+                data-bind="html: getTitle()"></span>
+            </span>
+        </label>
+    </div>
+    <div class="payment-method-content">
+        <!-- ko foreach: getRegion('messages') -->
+        <!-- ko template: getTemplate() --><!-- /ko -->
+        <!--/ko-->
+        <div class="payment-method-billing-address">
+            <!-- ko foreach: $parent.getRegion(getBillingAddressFormName()) -->
+            <!-- ko template: getTemplate() --><!-- /ko -->
+            <!--/ko-->
+        </div>
+        <p data-bind="html: getInstructions()"></p>
+        <div class="checkout-agreements-block">
+            <!-- ko foreach: $parent.getRegion('before-place-order') -->
+            <!-- ko template: getTemplate() --><!-- /ko -->
+            <!--/ko-->
+        </div>
+
+        <div class="actions-toolbar">
+            <div class="primary">
+                <button data-role="review-save"
+                        type="submit"
+                        data-bind="
+                        attr: {title: $t('Pay with KEKS Pay')},
+                        enable: (getCode() == isChecked() && isPlaceOrderActionAllowed()),
+                        click: authorize,
+                        css: {disabled: !isPlaceOrderActionAllowed()}"
+                        class="action primary checkout"
+                        disabled>
+                    <span data-bind="i18n: 'Pay with KEKS Pay'"></span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <div id="kekspay-checkout-popup" style="display: none">
+        <!-- ko if: isDesktop -->
+        <div id="kekspay-payment-instructions">
+            <ol>
+                <li data-bind="i18n: 'Open KEKS Pay'"></li>
+                <li>
+                    <span data-bind="i18n: 'Click'" class="kekspay-vertical-align-middle"></span>&nbsp;
+                    <img id="kekspay-plus-icon" data-bind="attr: {'src': getPlusIcon()}" class="kekspay-vertical-align-middle">&nbsp;
+                    <span data-bind="i18n: 'icon'" class="kekspay-vertical-align-middle"></span>
+                </li>
+                <li data-bind="i18n: 'Select \'Scan QR code\''"></li>
+                <li data-bind="i18n: 'Scan the QR code'"></li>
+            </ol>
+        </div>
+        <!-- /ko -->
+        <div id="kekspay-checkout-qr" data-bind="visible: !kekspayIsScanned()"></div>
+        <br/>
+        <span data-bind="html: kekspayPopupMessage"></span>
+        <h4 data-bind="html: kekspayWarningMessage"></h4>
+        <br/>
+        <!-- ko if: !isDesktop -->
+        <button type="button"
+                data-bind="attr: {title: $t('Open KEKS Pay')}, click: deepLinkClickButton"
+                class="action primary checkout kekspay-checkout-button">
+            <span data-bind="i18n: 'Open KEKS Pay'"></span>
+        </button>
+        <br/>
+        <!-- /ko -->
+        <button type="button"
+                data-bind="attr: {title: $t('Cancel')}, enable: (kekspayPopupCloseButtonEnabled()), click: cancel, css: {disabled: !kekspayPopupCloseButtonEnabled()}, visible: kekspayPopupCloseButtonEnabled()"
+                class="action primary checkout kekspay-checkout-button" id="kekspay-cancel-button" disabled>
+            <span data-bind="i18n: 'Cancel'"></span>
+        </button>
+        <br/>
+        <div id="kekspay-app-buttons">
+            <div>
+                <a data-bind="attr: { href: getAppStoreAppUrl()}">
+                    <img class="kekspay-download-app-logo" data-bind="attr: {'src': getAppStoreLogoSvgUrl()}">
+                </a>
+            </div>
+            <div>
+                <a data-bind="attr: { href: getPlayStoreAppUrl()}">
+                    <img class="kekspay-download-app-logo" data-bind="attr: {'src': getPlayStoreLogoSvgUrl()}">
+                </a>
+            </div>
+        </div>
+    </div>
+</div>

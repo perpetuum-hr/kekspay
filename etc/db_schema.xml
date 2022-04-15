@@ -1,0 +1,46 @@
+<?xml version="1.0"?>
+<schema xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:framework:Setup/Declaration/Schema/etc/schema.xsd">
+    <!-- kekspay_payment_status Table - used for state of payments -->
+    <table name="kekspay_payment_status" resource="default" engine="innodb" comment="KeksPay Payment Status">
+        <column xsi:type="int" name="order_id" unsigned="true" padding="11" nullable="false" comment="Order ID"/>
+        <column xsi:type="int" name="quote_id" unsigned="true" padding="11" comment="Quote ID"/>
+        <column xsi:type="varchar" name="bill_id" length="255" nullable="true" comment="Bill ID"/>
+        <column xsi:type="varchar" name="keks_id" length="255" nullable="true" comment="Keks ID"/>
+        <column xsi:type="varchar" name="cid" nullable="true" comment="CID"/>
+        <column xsi:type="varchar" name="tid" nullable="true" comment="TID"/>
+        <column xsi:type="int" name="status" nullable="true" comment="Status"/>
+        <column xsi:type="text" name="message" nullable="true" comment="Message"/>
+        <column xsi:type="text" name="response" nullable="true" comment="Current Response"/>
+        <column xsi:type="decimal" name="amount" nullable="true" precision="13" scale="2" comment="Paid Amount - Up to a trillion"/>
+        <column xsi:type="boolean" name="is_order_created" nullable="true" comment="Is Order Created"/>
+        <column xsi:type="varchar" name="identity_hash" length="255" nullable="true" comment="Indentity Hash"/>
+        <column xsi:type="text" name="additional_data" nullable="true" comment="Additional Data"/>
+        <column xsi:type="datetime" name="created_at" nullable="false" default="CURRENT_TIMESTAMP" comment="Created At"/>
+        <constraint xsi:type="primary" referenceId="PRIMARY">
+            <column name="order_id"/>
+        </constraint>
+        <constraint xsi:type="unique" referenceId="KEKSPAY_PAYMENT_STATUS_BILL_ID_KEKS_ID_IDENTITY_HASH">
+            <column name="bill_id"/>
+            <column name="keks_id"/>
+            <column name="identity_hash"/>
+        </constraint>
+    </table>
+
+    <!-- kekspay_advice_event_log Table - used for logging advices -->
+    <table name="kekspay_advice_event_log" resource="default" engine="innodb" comment="KeksPay Advice Event Log">
+        <column xsi:type="bigint" name="entity_id" unsigned="true" nullable="false" identity="true" comment="ID"/>
+        <column xsi:type="varchar" name="bill_id" length="255" nullable="true" comment="Bill ID"/>
+        <column xsi:type="varchar" name="keks_id" length="255" nullable="true" comment="Keks ID"/>
+        <column xsi:type="varchar" name="tid" nullable="true" comment="TID"/>
+        <column xsi:type="varchar" name="store" nullable="true" comment="Store"/>
+        <column xsi:type="decimal" name="amount" nullable="true" precision="13" scale="2" comment="Amount - Up to a trillion"/>
+        <column xsi:type="int" name="status" nullable="true" comment="Status"/>
+        <column xsi:type="text" name="message" nullable="true" comment="Message"/>
+        <column xsi:type="text" name="response" nullable="true" comment="Full JSON Response Received"/>
+        <column xsi:type="datetime" name="created_at" nullable="false" default="CURRENT_TIMESTAMP" comment="Created At"/>
+        <constraint xsi:type="primary" referenceId="PRIMARY">
+            <column name="entity_id"/>
+        </constraint>
+    </table>
+</schema>

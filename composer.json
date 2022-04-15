@@ -1,0 +1,19 @@
+{
+    "name": "perpetuum-hr/kekspay",
+    "description": "KeksPay payment module for Magento 2",
+    "license": "proprietary",
+    "type": "magento2-module",
+    "require": {
+        "php": ">=7.1.0",
+        "guzzlehttp/guzzle": "^6.5",
+        "ext-openssl": "*"
+    },
+    "autoload": {
+        "files": [
+            "registration.php"
+        ],
+        "psr-4": {
+            "Perpetuum\\KeksPay\\": ""
+        }
+    }
+}

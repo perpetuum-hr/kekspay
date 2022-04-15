@@ -1,0 +1,67 @@
+.kekspay-popup-window > .modal-inner-wrap {
+    background: #FFFFFF !important;
+}
+
+.kekspay-popup-window #kekspay-checkout-popup {
+    text-align: center;
+}
+
+.kekspay-popup-window .kekspay-qr-image img, .kekspay-popup-window .kekspay-qr-image canvas {
+    margin: 0 auto;
+    border: 20px solid #fff;
+}
+
+.kekspay-popup-window .kekspay-popup-logo {
+    max-width: 200px;
+    display: flex;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+#kekspay-app-buttons {
+    display: flex;
+    justify-content: center;
+    margin-top: 10px;
+}
+
+.kekspay-download-app-logo {
+    width: 152px;
+    height: 45px;
+    max-width: none;
+}
+
+#kekspay-payment-instructions {
+    display: flex;
+    justify-content: center;
+}
+
+#kekspay-payment-instructions > ol > li {
+    list-style-position: inside;
+}
+
+#kekspay-payment-instructions > ol {
+    padding: inherit;
+    text-align: left;
+}
+
+.kekspay-checkout-button {
+    margin-bottom: 10px;
+}
+
+.kekspay-vertical-align-middle {
+    vertical-align: middle;
+}
+
+#kekspay-plus-icon {
+    width: 30px;
+}
+
+@media only screen and (max-device-width: 768px) {
+    #kekspay-app-buttons {
+        flex-direction: column;
+    }
+
+    #kekspay-cancel-button {
+        margin-top: 100%;
+    }
+}

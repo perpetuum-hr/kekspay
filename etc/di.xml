@@ -1,0 +1,106 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+
+    <preference for="Perpetuum\KeksPay\Model\Client\ClientInterface"
+                type="Perpetuum\KeksPay\Model\Client\Client"/>
+
+    <preference for="Perpetuum\KeksPay\Model\Client\Request\RequestInterface"
+                type="Perpetuum\KeksPay\Model\Client\Request\Request"/>
+
+    <preference for="Perpetuum\KeksPay\Model\Client\Response\ResponseInterface"
+                type="Perpetuum\KeksPay\Model\Client\Response\Response"/>
+
+    <preference for="Perpetuum\KeksPay\Api\Data\Payment\RefundRequestInterface"
+                type="Perpetuum\KeksPay\Model\Payment\RefundRequest"/>
+
+    <preference for="Perpetuum\KeksPay\Api\Data\Transaction\AllTransactionInfoRequestInterface"
+                type="Perpetuum\KeksPay\Model\Transaction\AllTransactionInfoRequest"/>
+
+    <preference for="Perpetuum\KeksPay\Api\Data\Transaction\TransactionInfoRequestInterface"
+                type="Perpetuum\KeksPay\Model\Transaction\TransactionInfoRequest"/>
+
+    <preference for="Perpetuum\KeksPay\Api\Payment\PaymentInterface"
+                type="Perpetuum\KeksPay\Model\Payment\Payment"/>
+
+    <preference for="Perpetuum\KeksPay\Api\Data\KeksPaymentStatusInterface"
+                type="Perpetuum\KeksPay\Model\KeksPaymentStatus"/>
+
+    <preference for="Perpetuum\KeksPay\Api\KeksPaymentStatusRepositoryInterface"
+                type="Perpetuum\KeksPay\Model\KeksPaymentStatusRepository"/>
+
+    <preference for="Perpetuum\KeksPay\Api\Data\KeksPayAdviceEventLogInterface"
+                type="Perpetuum\KeksPay\Model\KeksPayAdviceEventLog"/>
+
+    <preference for="Perpetuum\KeksPay\Api\KeksPayAdviceEventLogRepositoryInterface"
+                type="Perpetuum\KeksPay\Model\KeksPayAdviceEventLogRepository"/>
+
+    <preference for="Perpetuum\KeksPay\Api\Data\Advice\AdviceResponsePayloadInterface"
+                type="Perpetuum\KeksPay\Model\Advice\AdviceResponsePayload"/>
+
+    <preference for="Perpetuum\KeksPay\Api\Data\Advice\AdvicePayloadInterface"
+                type="Perpetuum\KeksPay\Model\Advice\AdvicePayload"/>
+
+    <!-- payment -->
+    <type name="Perpetuum\KeksPay\Model\Payment\KeksPay">
+        <arguments>
+            <argument name="adapter" xsi:type="object">KeksPayVirtual</argument>
+        </arguments>
+    </type>
+
+    <virtualType name="KeksPayConfig" type="Magento\Payment\Gateway\Config\Config">
+        <arguments>
+            <argument name="methodCode" xsi:type="const">Perpetuum\KeksPay\Model\Payment\KeksPay::METHOD_CODE</argument>
+        </arguments>
+    </virtualType>
+
+    <virtualType name="KeksPayCountryValidator" type="Magento\Payment\Gateway\Validator\CountryValidator">
+        <arguments>
+            <argument name="config" xsi:type="object">KeksPayConfig</argument>
+        </arguments>
+    </virtualType>
+
+    <virtualType name="KeksPayConfigValueHandler" type="Magento\Payment\Gateway\Config\ConfigValueHandler">
+        <arguments>
+            <argument name="configInterface" xsi:type="object">KeksPayConfig</argument>
+        </arguments>
+    </virtualType>
+
+    <virtualType name="KeksPayHandlerPool" type="Magento\Payment\Gateway\Config\ValueHandlerPool">
+        <arguments>
+            <argument name="handlers" xsi:type="array">
+                <item name="title" xsi:type="string">Perpetuum\KeksPay\Gateway\Handler\TitleHandler</item>
+                <item name="default" xsi:type="string">KeksPayConfigValueHandler</item>
+            </argument>
+        </arguments>
+    </virtualType>
+
+    <virtualType name="KeksPayVirtual" type="Magento\Payment\Model\Method\Adapter">
+        <arguments>
+            <argument name="code" xsi:type="const">Perpetuum\KeksPay\Model\Payment\KeksPay::METHOD_CODE</argument>
+            <argument name="valueHandlerPool" xsi:type="object">KeksPayHandlerPool</argument>
+            <argument name="commandPool" xsi:type="object">KeksPayCommandPool</argument>
+            <argument name="validatorPool" xsi:type="object">KeksPayValidatorPool</argument>
+            <argument name="formBlockType" xsi:type="string">Magento\Payment\Block\Form</argument>
+            <argument name="infoBlockType" xsi:type="string">Perpetuum\KeksPay\Block\Info\KeksPay</argument>
+        </arguments>
+    </virtualType>
+
+    <virtualType name="KeksPayValidatorPool" type="Magento\Payment\Gateway\Validator\ValidatorPool">
+        <arguments>
+            <argument name="validators" xsi:type="array">
+                <item name="country" xsi:type="string">KeksPayCountryValidator</item>
+                <item name="availability" xsi:type="string">Perpetuum\KeksPay\Gateway\Validator\SessionValidator</item>
+            </argument>
+        </arguments>
+    </virtualType>
+
+    <virtualType name="KeksPayCommandPool" type="Magento\Payment\Gateway\Command\CommandPool">
+        <arguments>
+            <argument name="commands" xsi:type="array">
+                <item name="capture" xsi:type="string">Perpetuum\KeksPay\Gateway\Command\Capture</item>
+                <item name="refund" xsi:type="string">Perpetuum\KeksPay\Gateway\Command\Refund</item>
+            </argument>
+        </arguments>
+    </virtualType>
+</config>

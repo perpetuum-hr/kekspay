@@ -1,0 +1,42 @@
+{
+    "kekspay_payment_status": {
+        "column": {
+            "order_id": true,
+            "quote_id": true,
+            "bill_id": true,
+            "keks_id": true,
+            "cid": true,
+            "tid": true,
+            "status": true,
+            "message": true,
+            "response": true,
+            "created_at": true,
+            "amount": true,
+            "is_order_created": true,
+            "identity_hash": true,
+            "additional_data": true
+        },
+        "constraint": {
+            "PRIMARY": true,
+            "KEKSPAY_PAYMENT_STATUS_BILL_ID_KEKS_ID": true,
+            "KEKSPAY_PAYMENT_STATUS_BILL_ID_KEKS_ID_IDENTITY_HASH": true
+        }
+    },
+    "kekspay_advice_event_log": {
+        "column": {
+            "entity_id": true,
+            "bill_id": true,
+            "keks_id": true,
+            "tid": true,
+            "store": true,
+            "amount": true,
+            "status": true,
+            "message": true,
+            "response": true,
+            "created_at": true
+        },
+        "constraint": {
+            "PRIMARY": true
+        }
+    }
+}
